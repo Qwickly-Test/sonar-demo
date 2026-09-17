@@ -1,19 +1,14 @@
-# demo/attendance_utils.py  (DELIBERATELY BAD CODE FOR THE DEMO)
+# demo/attendance_utils.py  (FIXED)
+import os
 
-DB_PASSWORD = "admin123"  # hard-coded credential -> security hotspot
-
-
-def attendance_percentage(present, total):
-    try:
-        return present / total * 100
-    except:  # bare except -> code smell
-        pass
+DB_PASSWORD = os.environ.get("DB_PASSWORD", "")
 
 
-def is_same_session(session_a, session_b):
-    return session_a == session_a  # compares a value with itself -> bug
+def attendance_percentage(present: int, total: int) -> float:
+    if total == 0:
+        return 0.0
+    return present / total * 100
 
 
-def unused_helper(student_id):
-    result = student_id  # unused local variable -> code smell
-    return None
+def is_same_session(session_a: str, session_b: str) -> bool:
+    return session_a == session_b
